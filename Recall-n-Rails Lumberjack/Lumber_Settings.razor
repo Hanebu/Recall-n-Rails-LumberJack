@@ -1,0 +1,86 @@
+// *****
+// * Original by Xyio
+// * Modified by Hanebu
+// *****
+
+// Welcome message
+overhead ' ::: loading settings :::'
+
+// *********************************
+// * ↓↓↓ Adjust those settings ↓↓↓ *
+
+// If set to 1, you will randomly recall to your locations
+setvar useRandom 0
+
+// If useRandom = 0, youu can set the rune you wanna start here. Default is 1
+setvar currentRune 1
+
+// If set to 0 you will need to manually move.
+setvar useRails 1
+
+// Set this to the number of runes dedicated to harvesting
+// they need to be the first runes in your book
+setvar railCount 2
+
+// Delay before movment attempts, increase this if validation of rails fails. Default is 250
+setvar movementDelay 250
+
+// Max length of time before the script considers heavy lag or a captcha is up.
+// Must be less than harvestTimeout. Default is 8000
+setvar gumpOrLagTimeout 8000
+
+// Set to 1 if you are using Packhorse(s), set to 0 if you are not using Packhorse(s)
+setvar packyService 0
+
+// If packyService = 1, set how many Packhorses you are using
+setvar usingPackiesAmount 0
+
+// Organizer agent we will be using to move ore to pack animal
+setvar packDumpAgent 17
+
+// Do you want to use Tracking? 0 = No, 1 = Yes
+setvar useTracking 1
+
+// Do you want to use Summons? 0 = No, 1 = Yes
+setvar useSummons 1
+
+// Do you want to use Magic Reflect? 0 = No, 1 = Yes
+setvar useReflect 1
+
+// * ↑↑↑ Adjust those settings ↑↑↑ *
+// *********************************
+
+// ****************************************
+// * ↓↓↓ DO NOT MODIFY THE CODE BELOW ↓↓↓ *
+// ****************************************
+
+// Variable to hold information on which random rune and script we will use
+setvar theScript 0
+
+// Variable used to decide if we have summoned a new follower
+setvar canSummon 1
+
+// Variable of what packy dump we are on
+setvar packieDumps 0
+
+// Variable to make our location persist across errors/server down 
+setvar xListEntry 0
+setvar yListEntry 0
+
+// Lists used by scripts to move things to packies
+removelist emptyPackieList
+createlist emptyPackieList
+removelist fullPackieList
+createlist fullPackieList
+
+// Populate the packie lists
+if packyService > 0
+    while list emptyPackieList < usingPackiesAmount
+        overhead 'Select Packie(s)'
+        setvar! packieTempVar
+        pushlist emptyPackieList packieTempVar
+        wait 200
+    endwhile
+endif 
+
+overhead '::: settings loaded :::'
