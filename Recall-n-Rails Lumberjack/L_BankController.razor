@@ -1,0 +1,66 @@
+// *****
+// * Original by Xyio
+// * Modified by Hanebu
+// *****
+
+// ****************************
+// * ↓↓↓ ADD OWN MOVEMENT ↓↓↓ *
+while not position 1748 1677
+    walk 'West'
+endwhile
+walk 'North'
+walk 'North'
+pause 600
+// * ↑↑↑ ADD OWN MOVEMENT ↑↑↑ *
+// ****************************
+
+// ****************************************
+// * ↓↓↓ DO NOT MODIFY THE CODE BELOW ↓↓↓ *
+// ****************************************
+
+// Welcome message
+overhead "::: bank controller :::"
+clearsysmsg 
+
+// Create temp pacly list to clear other lists and write values back
+createlist 'tempPackieList'
+
+if not listexists emptyPackieList or not listexists fullPackieList
+    script 'Miner_Settings'
+endif
+
+// Set packy dumps back to zero
+setvar! 'packyDumps' 0
+
+// Equip axe
+if findtype 3908 backpack as 'tool'
+    dclick 'tool'
+    wait 1000
+endif
+
+// Smelt all ore that is in your own backpack
+while findtype 'log%s' backpack as 'log'
+    hotkey 'Use item in Hand'
+    waitfortarget 2000
+    target 'log'
+endwhile
+wait 600
+
+// Dump logs into Resource Stockpile
+if findtype 23034|23035 'ground' -1 1 3 as 'stockpile'
+    overhead '::: dropping logs :::'
+    menu 'stockpile' 0
+    waitfortarget 
+    target 'self'
+    wait 600
+endif
+
+// Restock from Shelf
+if findtype 44998 'ground' -1 1 3 as 'shelf'
+    overhead '::: restocking :::'
+    menu 'shelf' 1
+    wait 600
+endif
+
+// Next recall spot
+script 'L_RecallController'
